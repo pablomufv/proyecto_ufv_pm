@@ -1,3 +1,8 @@
+
+"""
+Presenta el dataframe que da origen a los datos, con filtros
+"""
+
 import pandas as pd
 
 import streamlit as st
@@ -16,17 +21,17 @@ def load_data(url: str):
     #lee los datos en formato json pues se expusieron como diccionario
     mijson=r.json()
     
-    #accede a los objetos worker y los almacena en listas
+    #accede a los objetos trabajador/contrato y los almacena en listas
     listado=mijson['workers']
     
     #Crea un dataframe con dichas listas
     df=pd.DataFrame.from_records(listado)
     
     #realiza la limpieza de los datos en determinados campos como:
-    #iva
+    #año de contrato/trabajo
     df['work_year']=df['work_year'].str.replace('e', '')
 
-    #formato decimal
+    #formato entero
     df['work_year']=df['work_year'].astype(int)
 
     return df
@@ -52,7 +57,7 @@ filtro_columna=st.selectbox("Seleccione el campo", selector_columnas)
 #
 filtro_valor=st.selectbox("Seleccione el valor", pd.unique(df[filtro_columna]))
 
-# dataframe filter
+#filtro para el dataframe
 df_seleccionado=df[df[filtro_columna]==filtro_valor]
 
 #Represento el dataframe en formato tabla

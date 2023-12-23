@@ -21,7 +21,7 @@ class BaseModel(PydanticBaseModel):
     
     #indica que el modelo permitirá tipos de datos arbitrarios, no sólo tipos nativos de Python como ints, strings, etc.
     # Esto es útil cuando se desean guardar objetos custom o de otros paquetes como tipos de datos
-        arbitrary_types_allowed = True
+        arbitrary_types_allowed=True
 
 #Esta clase define los atributos y sus respectivos tipos de datos para un worker
 class worker(BaseModel):
@@ -42,38 +42,35 @@ class worker(BaseModel):
 class Listadoworkers(BaseModel):
 
 #Define un atributo workers con el tipo List de la librería typing
-    workers = List[worker]
+    workers=List[worker]
 
 #Inicializa la aplicación FastAPI con la descripción y la versión del servidor
-app = FastAPI(
+app=FastAPI(
     title="Servidor de datos", #Establece el título del servidor de datos
     description="""Servimos datos de workers, pero podríamos hacer muchas otras cosas, la la la.""",
     version="0.1.0", #Establece la versión del servidor de datos
 )
 
-#Esta línea define un endpoint en la aplicación FastAPI que utiliza el método HTTP GET para acceder a la URL /retrieve_data/
+#Define un endpoint en la aplicación FastAPI que utiliza el método HTTP GET para acceder a la URL /retrieve_data/
 @app.get("/retrieve_data/")
-
-#Esta linea define un endpoint para la inserción de datos, pero NO SE UTILIZA
-#def insercion_endpoint (titulo:str = Form(...), autor:str=Form(...), pais:str=Form(...),genero:str=File(...),  archivo: UploadFile=File(...)):
 
 #Esta línea define una función para implementar el endpoint de recuperación de datos
 def retrieve_data ():
     
     #Esta línea lee el archivo CSV utilizando la biblioteca pandas y almacena los datos en una variable todosmisdatos
-    todosmisdatos = pd.read_csv('./data_science_jobs_salaries.csv',sep=',')
+    todosmisdatos=pd.read_csv('./data_science_jobs_salaries.csv',sep=',')
 
     #Esta línea reemplaza todos los valores nulos en el DataFrame todosmisdatos con el valor 0
-    todosmisdatos = todosmisdatos.fillna(0)
+    todosmisdatos=todosmisdatos.fillna(0)
     
     #Esta línea convierte el DataFrame en un diccionario, donde cada clave es el índice del DataFrame y cada valor es una lista de datos para esa fila.
-    todosmisdatosdict = todosmisdatos.to_dict(orient='records')
+    todosmisdatosdict=todosmisdatos.to_dict(orient='records')
     
     #Esta línea crea un objeto Listadoworkers instanciando la clase Listadoworkers
-    listado = Listadoworkers()
+    listado=Listadoworkers()
     
     #Esta línea asigna el diccionario todosmisdatosdict como el atributo
-    listado.workers = todosmisdatosdict
+    listado.workers=todosmisdatosdict
     return listado
     
     
