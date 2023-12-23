@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=nueva_contraseña
+    volumes: 
+      - ./postgresql/data_science_jobs_salaries.csv:/postgresql/data_science_jobs_salaries.csv
+    container_name: postgresql
+
+  fastapi:
+    build: fastapi/
+    ports:
+      - 8000:8000
+    networks:
+      - deploy_network
+    container_name: fastapi
+    volumes:
+      - mis_datos:/var/lib/docker/volumes/aa-streamlit-fastapi_mis_datos/data_fastapi
+  streamlit:
+    build: streamlit/
+    depends_on:
+      - fastapi
+    ports:
+      - 8501:8501
+    networks:
+      - deploy_network
+    container_name: streamlit
+    volumes:
+      - mis_datos:/var/lib/docker/volumes/aa-streamlit-fastapi_mis_datos/data_fastapi
+  
+networks:
+  deploy_network:
+    driver: bridge
+
+volumes:
+  mis_datos:
+    driver: local
+
