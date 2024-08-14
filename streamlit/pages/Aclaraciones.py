@@ -3,18 +3,7 @@
 Establece el proceso de carga de datos desde el puerto de exposicion, y define los elementos y la disposicion de la pestaña de dashboard
 """
 
-import pandas as pd
-
 import streamlit as st
-import plotly.express as px
-
-import matplotlib
-import matplotlib.pyplot as plt
-
-from matplotlib.backends.backend_agg import RendererAgg
-
-import requests
-import seaborn as sns
 
 #define un mensaje de texto
 def info_box (texto, color=None):
