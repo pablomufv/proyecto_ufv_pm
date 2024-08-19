@@ -35,7 +35,7 @@ def load_data(url: str):
     
     #comprueba que el proceso de exposicion del puerto es correcto
     if r.status_code != 200:
-        return None
+        return None #al encontrar aqui un return la función termina
         
     #lee los datos en formato json pues se expusieron como diccionario
     mijson=r.json()
@@ -76,7 +76,7 @@ df_merged=load_data('http://fastapi:8000/retrieve_data')
 #obtiene el numero de registros
 registros=str(df_merged.shape[0])
 
-#de niveles, residencias y trabajos
+#valores unicos de niveles, residencias y trabajos
 niveles=str(len(df_merged.experience_level.unique()))
 residencia=str(len(df_merged.employee_residence.unique()))
 trabajo=str(len(df_merged.job_title.unique()))
