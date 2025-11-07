@@ -9,3 +9,6 @@ COPY mydb.db /root/mydb.db
 
 # Set the default command to run when starting a container from this image
 CMD ["sqlite3", "/root/mydb.db"]
+
+# Expose the default SQLite port (not typically used, but for consistency)
+EXPOSE 1433
